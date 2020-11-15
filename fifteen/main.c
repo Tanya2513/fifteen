@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 
 
@@ -111,8 +112,6 @@ void render(arrField[4][4]){
 void makeMove(arrField[4][4]){
     int move;
     scanf("%d", &move);
-    
-    printf("%d", move);
 
    int * position = findInField(arrField, move);
 
@@ -124,12 +123,24 @@ void makeMove(arrField[4][4]){
 
    int zeroI = *positionZero;
    int zeroJ = *(positionZero + 1);
-   
-    arrField[zeroI][zeroJ] = move;
-    arrField[i][j] = 0;
+     
+    int isMovePossible = 0;
+    
+    if(
+       (i == zeroI && (abs(j - zeroJ) == 1))
+        || (j == zeroJ && (abs(i - zeroI) == 1))
+       ){
+        isMovePossible = 1;
+    }
+    if(isMovePossible){
+        arrField[zeroI][zeroJ] = move;
+        arrField[i][j] = 0;
+    } else {
+        printf("Помилка. Цей хід суперечить правилам гри. \n");
+    }
 }
 
-int main(int argc, const char * argv[]) {
+void runGame(){
     srand(time(NULL));
     int arrField[4][4]= {
         {0, 0, 0, 0},
@@ -138,17 +149,63 @@ int main(int argc, const char * argv[]) {
         {0, 0, 0, 0}
     };
     printf("1 \n");
+    
     do {
         randomFill(arrField);
     } while( isPossibleToWin(arrField) == 0);
     
     printf("9 \n");
-    printf("Носушка, твой ход \n");
+    printf("Будь ласка, зробіть свій хід \n");
    
     do{
         render(arrField);
         makeMove(arrField);
-    }while (1==1);
+    } while (1==1);
+}
+
+void rules(){
+    printf("Rules of game \n");
+}
+
+void about(){
+    printf("Tetiana Pykulenko \n");
+}
+
+void menu(){
+    printf("1. Грати \n");
+    printf("2. Правила гри \n");
+    printf("3. Інформація про розробника \n");
+    printf("4. Вихід \n\n");
+    
+    printf("Введіть номер пункту меню, до якого хочете перейти: \n");
+    int choice;
+    scanf("%d", &choice);
+    
+    
+    switch (choice) {
+        case 1:
+            runGame();
+            break;
+        case 2:
+            rules();
+            menu();
+            break;
+        case 3:
+            about();
+            menu();
+            break;
+        case 4:
+            exit(0);
+            break;
+        default:
+            printf("Введені не коректні дані. Спробуйте ще раз.\n");
+            menu();
+            break;
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    menu();
     
     return 0;
 }
