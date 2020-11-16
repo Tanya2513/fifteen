@@ -9,20 +9,41 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string.h>   //Для memset
+
+void cls()
+{
+    int x;
+    for ( x = 0; x < 100; x++ )
+    {
+        printf("\n");
+    }
+}
+
+void render(int width, int height, int arrField[height][width]){
+    printf("------------------------- \n");
+    for(int w = 0; w < height; w++){
+        printf("|");
+        for (int h = 0; h< width; h++) {
+            printf(" %3d |", arrField[h][w]);
+        }
+        printf("\n");
+        printf("------------------------- \n");
+    }
+}
 
 
 
-
-
-int * findInField(int arrField[4][4], int needle){
-    
+int * findInField(int width, int height, int arrField[width][height], int needle){
+//    printf("findInField \n");
     int *position = malloc(2 * sizeof(int));
     
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            if (arrField[i][j] == needle){
-                 position[0] = i;
-                position[1] = j;
+   
+    for(int h = 0; h < height; h++){
+        for(int w = 0; w < width; w++){
+            if (arrField[w][h] == needle){
+                position[0] = w;
+                position[1] = h;
                 return  position;
             }
         }
@@ -33,8 +54,9 @@ int * findInField(int arrField[4][4], int needle){
    return  position;
 };
 
-int isInField(int arrField[4][4], int needle){
-    int * position = findInField(arrField, needle);
+int isInField(int width, int height, int arrField[width][height], int needle){
+//    printf("isInField \n");
+    int * position = findInField(width, height, arrField, needle);
 
     if(  *position == -1){
         return 0;
@@ -44,82 +66,79 @@ int isInField(int arrField[4][4], int needle){
 
 }
 
-void randomFill(int arrField[4][4]){
+void randomFill(int width, int height, int arrField[width][height]){
+    memset( arrField, 0, width*height*sizeof(int) );
     
-    for(int i = 0; i < 4; i++){
-        for(int j = 0; j < 4; j++){
-            if( i==3 && j==3){
+    for(int h = 0; h < height; h++){
+        for(int w = 0; w < width; w++){
+            if( h== height -1 && w== width -1){
+                arrField[h][w] = 0;
                 break;
             }
             int number;
+            
+            render(width, height, arrField);
+
             do {
-                number = 1 + rand()%15;
-            } while(isInField(arrField, number) == 1);
+                number = 1 + rand()%((width*height)-1);
+                printf("Number: %d ", number);
+            } while(isInField(width, height, arrField, number) == 1);
                 
-            arrField[i][j] = number;
+            arrField[h][w] = number;
         }
     }
 };
 
 
-int isPossibleToWin(arrField[4][4]){
-    int line[15];
+int isPossibleToWin(int width, int height, int arrField[width][height]){
+    
+    printf("isPossibleToWin \n");
+    int e = 0;
+    int numbersCount = width*height-1;
+    int *line = malloc(numbersCount * sizeof(int));
+    
     int count = 0;
-    for(int i = 0; i < 4; i++){
-        if (i%2==0){
-            for(int j = 0; j < 4; j++){
-                if (i==3 && j==3){
+    for(int h = 0; h < height; h++){
+        for(int w = 0; w < width; w++){
+                if (w==width-1 && h==height-1){
+                    // тут находится 0
+                    e = w+1;
                     break;
                 }
-                line[count] = arrField[i][j];
+                line[count] = arrField[w][h];
                 count++;
-            }
-        } else {
-            for(int j = 3; j >= 0; j--){
-                if (i==3 && j==3){
-                    break;
-                }
-                line[count] = arrField[i][j];
-                count++;
-            }
         }
     }
     
     int sum=0;
-    for(int k = 0; k <= 15; k++){
-        for(int m = k+1; m < 15; m++){
+    for(int k = 0; k <= numbersCount; k++){
+        for(int m = k+1; m < numbersCount; m++){
             if(line[k]>line[k+m]){
                 sum++;
             }
         }
     }
+
     
-    if (sum%2==0){
+    if ((sum+e)%2==0){
         return 1;
     } else {
         return 0;
     }
 };
 
-void render(arrField[4][4]){
-    printf("------------------------- \n");
-    for(int i = 0; i < 4; i++){
-        printf("| %3d | %3d | %3d | %3d | \n", arrField[i][0], arrField[i][1], arrField[i][2], arrField[i][3]);
-        printf("------------------------- \n");
-    }
-}
 
-void makeMove(arrField[4][4]){
+void makeMove(int width, int height, int arrField[width][height]){
     int move;
     scanf("%d", &move);
 
-   int * position = findInField(arrField, move);
+   int * position = findInField(width, height, arrField, move);
 
    int i = *position;
    int j = *(position+ 1);
     
     
-   int * positionZero = findInField(arrField, 0);
+   int * positionZero = findInField(width, height, arrField, 0);
 
    int zeroI = *positionZero;
    int zeroJ = *(positionZero + 1);
@@ -132,34 +151,36 @@ void makeMove(arrField[4][4]){
        ){
         isMovePossible = 1;
     }
+    
     if(isMovePossible){
         arrField[zeroI][zeroJ] = move;
         arrField[i][j] = 0;
     } else {
+        cls();
+
         printf("Помилка. Цей хід суперечить правилам гри. \n");
     }
 }
 
 void runGame(){
     srand(time(NULL));
-    int arrField[4][4]= {
-        {0, 0, 0, 0},
-        {0, 0, 0, 0},
-        {0, 0, 0, 0},
-        {0, 0, 0, 0}
-    };
-    printf("1 \n");
+    int width = 5;
+    int height = 5;
+
+    int arrField[width][height];
+  
+    printf("2 \n");
     
     do {
-        randomFill(arrField);
-    } while( isPossibleToWin(arrField) == 0);
+        randomFill(width, height, arrField);
+    } while( isPossibleToWin(width, height, arrField) == 0);
     
     printf("9 \n");
     printf("Будь ласка, зробіть свій хід \n");
    
     do{
-        render(arrField);
-        makeMove(arrField);
+        render(width, height, arrField);
+        makeMove(width, height, arrField);
     } while (1==1);
 }
 
@@ -180,7 +201,7 @@ void menu(){
     printf("Введіть номер пункту меню, до якого хочете перейти: \n");
     int choice;
     scanf("%d", &choice);
-    
+    cls();
     
     switch (choice) {
         case 1:
