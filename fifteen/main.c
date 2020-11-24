@@ -20,15 +20,28 @@ void cls()
     }
 }
 
+void drawLine(int width){
+    printf("-");
+    for(int w = 1; w <= width; w++){
+        printf("-------");
+    }
+    printf("\n");
+};
+
+
 void render(int width, int height, int arrField[height][width]){
-    printf("------------------------- \n");
+    drawLine(width);
     for(int w = 0; w < height; w++){
         printf("|");
         for (int h = 0; h< width; h++) {
-            printf(" %3d |", arrField[h][w]);
+            if(arrField[h][w] != 0){
+                printf(" %3d  |", arrField[h][w]);
+            } else {
+                printf("      |");
+            }
         }
         printf("\n");
-        printf("------------------------- \n");
+        drawLine(width);
     }
 }
 
@@ -71,20 +84,17 @@ void randomFill(int width, int height, int arrField[width][height]){
     
     for(int h = 0; h < height; h++){
         for(int w = 0; w < width; w++){
-            if( h== height -1 && w== width -1){
-                arrField[h][w] = 0;
+            if( h == height -1 && w == width -1){
+                arrField[w][h] = 0;
                 break;
             }
             int number;
-            
-            render(width, height, arrField);
 
             do {
                 number = 1 + rand()%((width*height)-1);
-                printf("Number: %d ", number);
-            } while(isInField(width, height, arrField, number) == 1);
+            } while(isInField(width, height, arrField, number));
                 
-            arrField[h][w] = number;
+            arrField[w][h] = number;
         }
     }
 };
@@ -92,17 +102,15 @@ void randomFill(int width, int height, int arrField[width][height]){
 
 int isPossibleToWin(int width, int height, int arrField[width][height]){
     
-    printf("isPossibleToWin \n");
-    int e = 0;
+    int e = height;
     int numbersCount = width*height-1;
     int *line = malloc(numbersCount * sizeof(int));
-    
+ 
     int count = 0;
     for(int h = 0; h < height; h++){
         for(int w = 0; w < width; w++){
                 if (w==width-1 && h==height-1){
                     // тут находится 0
-                    e = w+1;
                     break;
                 }
                 line[count] = arrField[w][h];
@@ -162,27 +170,56 @@ void makeMove(int width, int height, int arrField[width][height]){
     }
 }
 
+int isFinishPosition(int width, int height, int arrField[width][height]){
+    
+    int counter = 0;
+    for(int h = 0; h < height; h++){
+        for(int w = 0; w < width; w++){
+            if( h== height -1 && w== width -1){
+                if (arrField[w][h] != 0){
+                    return 0;
+                }
+                break;
+            }
+            
+            counter++;
+            if(counter!=arrField[w][h]){
+                return 0;
+            }
+        }
+    }
+    
+    return 1;
+};
+
 void runGame(){
     srand(time(NULL));
-    int width = 5;
-    int height = 5;
+    int width = 0;
+    int height = 0;
+    do{
+       printf("Введите размерность поля игры (3,4,5):\n ");
+       scanf("%d", &width);
+       height = width;
+    } while (width < 3);
+    
 
     int arrField[width][height];
-  
-    printf("2 \n");
     
     do {
         randomFill(width, height, arrField);
     } while( isPossibleToWin(width, height, arrField) == 0);
     
-    printf("9 \n");
     printf("Будь ласка, зробіть свій хід \n");
-   
+    int isFinish = 0;
     do{
         render(width, height, arrField);
         makeMove(width, height, arrField);
-    } while (1==1);
-}
+        isFinish = isFinishPosition(width, height, arrField);
+    } while (1==1 && isFinish != 1);
+    
+    printf("Поздравляю! Игра успешно пройдена! :) \n");
+
+};
 
 void rules(){
     printf("Rules of game \n");
@@ -206,6 +243,7 @@ void menu(){
     switch (choice) {
         case 1:
             runGame();
+            menu();
             break;
         case 2:
             rules();
@@ -224,6 +262,8 @@ void menu(){
             break;
     }
 }
+
+
 
 int main(int argc, const char * argv[]) {
     menu();
