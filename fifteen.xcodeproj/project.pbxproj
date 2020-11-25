@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		495FD0A4256DAC9500A4411A /* menu.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0A3256DAC9500A4411A /* menu.c */; };
+		495FD0A8256DAD0000A4411A /* cls.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0A7256DAD0000A4411A /* cls.c */; };
+		495FD0AC256DAE7800A4411A /* game.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0AB256DAE7800A4411A /* game.c */; };
+		495FD0B0256DAE9100A4411A /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0AF256DAE9100A4411A /* render.c */; };
+		495FD0B4256DB16500A4411A /* rules.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0B3256DB16500A4411A /* rules.c */; };
+		495FD0B8256DB19800A4411A /* about.c in Sources */ = {isa = PBXBuildFile; fileRef = 495FD0B7256DB19800A4411A /* about.c */; };
 		49E8B7182558266400117B0B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 49E8B7172558266400117B0B /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +29,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		495FD0A2256DAC9500A4411A /* menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = menu.h; sourceTree = "<group>"; };
+		495FD0A3256DAC9500A4411A /* menu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = menu.c; sourceTree = "<group>"; };
+		495FD0A6256DAD0000A4411A /* cls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cls.h; sourceTree = "<group>"; };
+		495FD0A7256DAD0000A4411A /* cls.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cls.c; sourceTree = "<group>"; };
+		495FD0AA256DAE7800A4411A /* game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
+		495FD0AB256DAE7800A4411A /* game.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = game.c; sourceTree = "<group>"; };
+		495FD0AE256DAE9100A4411A /* render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
+		495FD0AF256DAE9100A4411A /* render.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render.c; sourceTree = "<group>"; };
+		495FD0B2256DB16500A4411A /* rules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rules.h; sourceTree = "<group>"; };
+		495FD0B3256DB16500A4411A /* rules.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = rules.c; sourceTree = "<group>"; };
+		495FD0B6256DB19800A4411A /* about.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = about.h; sourceTree = "<group>"; };
+		495FD0B7256DB19800A4411A /* about.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = about.c; sourceTree = "<group>"; };
 		49E8B7142558266400117B0B /* fifteen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = fifteen; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E8B7172558266400117B0B /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +76,18 @@
 			isa = PBXGroup;
 			children = (
 				49E8B7172558266400117B0B /* main.c */,
+				495FD0A2256DAC9500A4411A /* menu.h */,
+				495FD0A3256DAC9500A4411A /* menu.c */,
+				495FD0A6256DAD0000A4411A /* cls.h */,
+				495FD0A7256DAD0000A4411A /* cls.c */,
+				495FD0AA256DAE7800A4411A /* game.h */,
+				495FD0AB256DAE7800A4411A /* game.c */,
+				495FD0AE256DAE9100A4411A /* render.h */,
+				495FD0AF256DAE9100A4411A /* render.c */,
+				495FD0B2256DB16500A4411A /* rules.h */,
+				495FD0B3256DB16500A4411A /* rules.c */,
+				495FD0B6256DB19800A4411A /* about.h */,
+				495FD0B7256DB19800A4411A /* about.c */,
 			);
 			path = fifteen;
 			sourceTree = "<group>";
@@ -88,7 +118,7 @@
 		49E8B70C2558266400117B0B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					49E8B7132558266400117B0B = {
 						CreatedOnToolsVersion = 12.1;
@@ -118,6 +148,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495FD0A8256DAD0000A4411A /* cls.c in Sources */,
+				495FD0AC256DAE7800A4411A /* game.c in Sources */,
+				495FD0A4256DAC9500A4411A /* menu.c in Sources */,
+				495FD0B8256DB19800A4411A /* about.c in Sources */,
+				495FD0B4256DB16500A4411A /* rules.c in Sources */,
+				495FD0B0256DAE9100A4411A /* render.c in Sources */,
 				49E8B7182558266400117B0B /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +275,7 @@
 		49E8B71C2558266400117B0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -247,6 +284,7 @@
 		49E8B71D2558266400117B0B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
